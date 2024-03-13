@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Group Chat</title>
+		<!-- Import js library for socket.io -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			// Invoke the socket library
+			const socket = io();
+
+			// Function for setting the user
+			function setUser() {
+				let valueIp = document.getElementById("ipaddress");
+				let valueport = document.getElementById("port");
+
+				if (!valueIp.value) {
+					alert("IP Address is required");
+					return false;
+				}
+
+				if (!valueport.value) {
+					alert("Port is required");
+					return false;
+				}
+
+				socket.emit("setipaddress", {
+					ipaddress: document.getElementById("ipaddress").value,
+					port: document.getElementById("port").value,
+				});
+			}
+			var user;
+			// Handle socket on client side when ip address is already exist
+			socket.on("ipAddress", function (data) {
+				document.getElementById("chat-container").innerHTML = data;
+			});
+			// Handle socket on client side when new ip address is received
+			socket.on("ipaddressSet", function (data) {
+				user = data.username;
+				document.body.innerHTML =
+					'<input type="text" id="message" placeholder="Type message">\
+			             <button type="button" name="button" onclick="sendMessage()"> Send Message </button>\
+			             <div id="message-container"></div>';
+			});
+			// Function for sending message
+			function sendMessage() {
+				var msg = document.getElementById("message").value;
+				if (msg) {
+					socket.emit("msg", { message: msg, user: user });
+				}
+			}
+			// Handle socket on clicnt side for displaying the message
+			socket.on("newmsg", (data) => {
+				if (user) {
+					document.getElementById("message-container").innerHTML +=
+						"<div><b> " + data.user + "</b> : " + data.message + "</div>";
+				}
+			});
+		</script>
+	</head>
+	<!-- chat application registration form -->
+	<body>
+		Welcome to the Chat Application!
+		<form id="chat-container">
+			<input
+				id="ipaddress"
+				type="text"
+				name="ipaddress"
+				value=""
+				placeholder="Enter your ip address"
+			/>
+
+			<input
+				id="port"
+				type="text"
+				name="port"
+				value=""
+				placeholder="Enter your port"
+			/>
+
+			<button type="button" name="button" onclick="setUser()">
+				Let me chat !
+			</button>
+		</form>
+	</body>
+</html>
