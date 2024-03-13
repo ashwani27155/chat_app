@@ -4,7 +4,7 @@ Instructions for Initializing and Running the Chat Application:
 
 2. Install all necessary dependencies by executing the command: npm i
 
-3. Initiate the server by running the command: node chat.js
+3. Initiate the server by running the command: npm start
 
 4. Open your preferred web browser and enter the following URL in the address bar: localhost:8000
 
