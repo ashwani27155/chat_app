@@ -46,6 +46,7 @@
 				var msg = document.getElementById("message").value;
 				if (msg) {
 					socket.emit("msg", { message: msg, user: user });
+					document.getElementById("message").value = "";
 				}
 			}
 			// Handle socket on clicnt side for displaying the message
@@ -54,7 +55,6 @@
 					document.getElementById("message-container").innerHTML +=
 						"<div><b> " + data.user + "</b> : " + data.message + "</div>";
 				}
-				document.getElementById("message-container").innerHTML += " ";
 			});
 		</script>
 	</head>
