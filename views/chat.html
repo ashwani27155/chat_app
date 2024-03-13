@@ -10,14 +10,14 @@
 
 			// Function for setting the user
 			function setUser() {
-				let valueIp = document.getElementById("ipaddress");
-				let valueport = document.getElementById("port");
-
+				let valueIp = document.getElementById("ipaddress"); // Get the value of ip address
+				let valueport = document.getElementById("port"); // Get the value of port
+				// Check IP Address is not empty
 				if (!valueIp.value) {
 					alert("IP Address is required");
 					return false;
 				}
-
+				// Check port is not empty
 				if (!valueport.value) {
 					alert("Port is required");
 					return false;
